@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just a Paper</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script>
+        function changeFontSize(size) {
+            document.getElementById('editor').style.fontSize = size + 'px';
+            const fontSizeValue = document.getElementById('fontSizeValue');
+            if (fontSizeValue) fontSizeValue.textContent = size + 'px';
+        }
+        function changeFontFamily(font) {
+            document.getElementById('editor').style.fontFamily = font;
+        }
+        function changeLineHeight(height) {
+            document.getElementById('editor').style.lineHeight = height;
+            const lineHeightValue = document.getElementById('lineHeightValue');
+            if (lineHeightValue) lineHeightValue.textContent = height;
+        }
+        function changeWidth(width) {
+            document.getElementById('editor').style.maxWidth = width + 'px';
+            const widthValue = document.getElementById('widthValue');
+            if (widthValue) widthValue.textContent = width + 'px';
+        }
+        function toggleDrawer() {
+            document.getElementById('drawer').classList.toggle('open');
+        }
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('#drawer select')
+                    .forEach(sel => sel.dispatchEvent(new Event('change')));
+            document.querySelectorAll('#drawer input[type="range"]')
+                    .forEach(range => range.dispatchEvent(new Event('input')));
+
+        });
+    </script>
+
+    <div id="drawer">
+        <div class="setting-group">
+            <label for="fontFamilySelect">Font Family</label>
+            <select id="fontFamilySelect" onchange="changeFontFamily(this.value)">
+                <option value="'Helvetica Neue', sans-serif">Helvetica</option>
+                <option value="'Arial', sans-serif">Arial</option>
+                <option value="'Georgia', serif">Georgia</option>
+                <option value="'Courier New', monospace">Courier</option>
+                <option value="'Monaco', monospace">Monaco</option>
+                <option value="'Verdana', sans-serif">Verdana</option>
+                <option value="'Trebuchet MS', sans-serif">Trebuchet</option>
+            </select>
+        </div>
+        <div class="setting-group">
+            <label for="fontSizeRange">Font Size: <span id="fontSizeValue">14px</span></label>
+            <input type="range" id="fontSizeRange" min="12" max="34" step="1" value="14" oninput="changeFontSize(this.value)">
+        </div>
+        <div class="setting-group">
+            <label for="lineHeightRange">Line Height: <span id="lineHeightValue">1.9</span></label>
+            <input type="range" id="lineHeightRange" min="1.2" max="2.6" step="0.1" value="1.9" oninput="changeLineHeight(this.value)">
+        </div>
+        <div class="setting-group">
+            <label for="widthRange">
+            Width: <span id="widthValue">800px</span>
+            </label>
+            <input type="range" id="widthRange" class="setting-control" min="400" max="1200" step="10" value="800" oninput="changeWidth(this.value)">
+        </div>
+    </div>
+    <button id="menuButton" onclick="toggleDrawer()">☰</button>
+    <div id="overlay" onclick="toggleDrawer()"></div>
+    <textarea id="editor" placeholder="Write Begins..."></textarea>
+</body>
+</html>
